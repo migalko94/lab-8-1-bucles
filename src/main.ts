@@ -188,29 +188,29 @@ interface NumeroPacientesPorEspecialidad {
 const cuentaPacientesPorEspecialidad = (
   pacientes: Pacientes[]
 ): NumeroPacientesPorEspecialidad => {
-  let pacientesPorEspecialidad: NumeroPacientesPorEspecialidad = {
-    medicoDeFamilia: 0,
-    pediatria: 0,
-    cardiologia: 0,
-  };
-  let numeroPacientesMedicoDeFamilia = 0;
-  let numeroPacientesPediatria = 0;
-  let numeroPacientesCardiologia = 0;
+  const numeroPacientesPorEspecialidad = (
+    listaPacientes: Pacientes[],
+    tipoEspecialidad: string
+  ): number => {
+    let numeroPacientes = 0;
 
-  for (let i = 0; i < pacientes.length; i++) {
-    if (pacientes[i].especialidad === "Medico de familia") {
-      numeroPacientesMedicoDeFamilia += 1;
-      pacientesPorEspecialidad.medicoDeFamilia = numeroPacientesMedicoDeFamilia;
+    for (let i = 0; i < listaPacientes.length; i++) {
+      if (listaPacientes[i].especialidad === tipoEspecialidad) {
+        numeroPacientes += 1;
+      }
     }
-    if (pacientes[i].especialidad === "Pediatra") {
-      numeroPacientesPediatria += 1;
-      pacientesPorEspecialidad.pediatria = numeroPacientesPediatria;
-    }
-    if (pacientes[i].especialidad === "Cardiólogo") {
-      numeroPacientesCardiologia += 1;
-      pacientesPorEspecialidad.cardiologia = numeroPacientesCardiologia;
-    }
-  }
+
+    return numeroPacientes;
+  };
+
+  let pacientesPorEspecialidad: NumeroPacientesPorEspecialidad = {
+    medicoDeFamilia: numeroPacientesPorEspecialidad(
+      pacientes,
+      "Medico de familia"
+    ),
+    pediatria: numeroPacientesPorEspecialidad(pacientes, "Pediatra"),
+    cardiologia: numeroPacientesPorEspecialidad(pacientes, "Cardiólogo"),
+  };
 
   return pacientesPorEspecialidad;
 };
